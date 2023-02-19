@@ -6,7 +6,7 @@ import "./Prayer.css";
 function Prayer() {
   const [prayertime, setPrayertime] = useState({});
   const [place, setPlace] = useState("tashkent");
-  const [err, setErr] = useState("");
+  const [error, setError] = useState("");
   const [inputVal, setInputVal] = useState("");
   const API_KEY = "bba7ab9bd035d049765305fef6073578";
   const submit = (e) => {
@@ -19,13 +19,13 @@ function Prayer() {
       .get(`https://muslimsalat.com/${place}.json?key=${API_KEY}`)
       .then((res) => {
         setPrayertime(res.data);
+        setError("")
       })
-      .catch((err) => setErr("Type name write"));
+      .catch(err => setError("Type name write"));
   }, [place]);
   console.log(prayertime);
 
   return (
-    
     <div className="mom">
       <h2>Namaz Times</h2>
       <div className="prayersection">
@@ -36,8 +36,8 @@ function Prayer() {
             placeholder="Type state or country name ..."
           />
         </form>
-        {err && <h3>{err}</h3>}
         <div>
+        {error && <h3>{error}</h3>}
           <h1>
             {prayertime.city},{prayertime.country}
           </h1>
